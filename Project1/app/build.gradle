@@ -1,14 +1,20 @@
 apply plugin: 'com.android.application'
 
+ext.majorVersion = 0
+ext.minorVersion = 1
+ext.patchVersion = 0
+ext.preRelease= "Pre-Alpha"
+ext.minSdkVersion = 23
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.project1"
-        minSdkVersion 23
+        minSdkVersion project.ext.minSdkVersion
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode = generateVersionCode()
+        versionName = generateVersionName()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -19,6 +25,18 @@ android {
     }
 }
 
+private Integer generateVersionCode() {
+    return ext.minSdkVersion * 10000000 + ext.majorVersion * 10000 + ext.minorVersion * 100 + ext.patchVersion
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.majorVersion}.${ext.minorVersion}.${ext.patchVersion}"
+    if (ext.preRelease != null) {
+        versionName = versionName + "-" + ext.preRelease
+    }
+    return versionName;
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -27,3 +45,4 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
+
