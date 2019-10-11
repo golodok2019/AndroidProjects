@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
-apply from: "$project.rootDir/gradle/script-git-version.gradle"
 
+ext.majorVersion = 0
+ext.minorVersion = 1
+ext.patchVersion = 2
+
+ext.preRelease= "Pre-Alpha"
 ext.minSdkVersion = 23
 
 android {
@@ -10,8 +14,8 @@ android {
         applicationId "com.example.project1"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion 29
-        versionCode = gitVersionCode
-        versionName = gitVersionName
+        versionCode = generateVersionCode()
+        versionName = generateVersionName()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,9 +24,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
+private Integer generateVersionCode() {
+    return ext.minSdkVersion * 10000000 + ext.majorVersion * 10000 + ext.minorVersion * 100 + ext.patchVersion
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.majorVersion}.${ext.minorVersion}.${ext.patchVersion}"
+    if (ext.preRelease != null) {
+        versionName = versionName + "-" + ext.preRelease
+    }
+    return versionName;
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
