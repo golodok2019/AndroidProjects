@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
             READ_PHONE_GRANTED = true;
         } else {
              AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Alert!")
-                  .setMessage("Requer!")
+            builder.setTitle("Alert")
+                  .setMessage("Need youre permision to show phone Id!")
                   .setCancelable(false)
                   .setNegativeButton("OK",
                     new DialogInterface.OnClickListener() {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (READ_PHONE_GRANTED) {
             TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-            view.setText(TelephonyMgr.getDeviceId());
+            view.setText("Id "+TelephonyMgr.getDeviceId());
         }
 
     }
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         if (READ_PHONE_GRANTED) {
             TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
             if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED || READ_PHONE_GRANTED == true) {
-                view.setText(TelephonyMgr.getDeviceId());
+                view.setText("Id "+TelephonyMgr.getDeviceId());
             }
         }
         else{
