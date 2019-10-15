@@ -23,9 +23,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_READ_PHONE = 1;
-    private static boolean READ_PHONE_GRANTED = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +34,10 @@ public class MainActivity extends AppCompatActivity {
         TextView versionCode = findViewById(R.id.textCode);
         versionCode.setText(String.format(Locale.getDefault(), "Model: %s", android.os.Build.MODEL));
 
-        TextView view = (TextView) findViewById(R.id.textAndroid);
+        TextView view =  findViewById(R.id.textAndroid);
 
         int hasReadContactPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
-        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
-            READ_PHONE_GRANTED = true;
-        } else {
+        if (hasReadContactPermission != PackageManager.PERMISSION_GRANTED) {
              AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Alert")
                   .setMessage("Need youre permision to show phone Id!")
@@ -56,30 +51,22 @@ public class MainActivity extends AppCompatActivity {
             });
              builder.show();
         }
-        if (READ_PHONE_GRANTED) {
+        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
             TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
             view.setText("Id "+TelephonyMgr.getDeviceId());
         }
 
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-        TextView view = (TextView) findViewById(R.id.textAndroid);
-        switch (requestCode) {
-            case REQUEST_CODE_READ_PHONE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    READ_PHONE_GRANTED = true;
-                }
-        }
-        if (READ_PHONE_GRANTED) {
+        int hasReadContactPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        TextView view =  findViewById(R.id.textAndroid);
+
+        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED){
             TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ||
-                    READ_PHONE_GRANTED == true) {
-                view.setText("Id "+TelephonyMgr.getDeviceId());
-            }
+            view.setText("Id "+TelephonyMgr.getDeviceId());
         }
         else{
             view.setText("Need set permition");
