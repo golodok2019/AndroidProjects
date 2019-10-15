@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView versionName = findViewById(R.id.textName);
-        versionName.setText(String.format(Locale.getDefault(), "Name: %s.%s", BuildConfig.VERSION_NAME,BuildConfig.VERSION_CODE));
+        versionName.setText(String.format(Locale.getDefault(), "Name: %s", BuildConfig.VERSION_NAME));
 
         TextView versionCode = findViewById(R.id.textCode);
         versionCode.setText(String.format(Locale.getDefault(), "Model: %s", android.os.Build.MODEL));
