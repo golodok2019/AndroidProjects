@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TextView view = (TextView) findViewById (R.id.textAndroid);
-        //dialog = new CustomDialogFragment();
         setContentView(R.layout.activity_main);
 
         TextView versionName = findViewById(R.id.textName);
