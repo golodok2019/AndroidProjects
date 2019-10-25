@@ -4,8 +4,8 @@ import java.util.regex.Pattern
 apply plugin: 'com.android.application'
 apply from: "$project.rootDir/gradle/script-git-version.gradle"
 
-ext.preRelease= "Pre-Alpha"
 ext.minSdkVersion = 23
+
 
 android {
     compileSdkVersion 29
@@ -24,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8

@@ -22,7 +22,7 @@ import com.example.project1.R;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,27 +40,36 @@ public class MainActivity extends AppCompatActivity {
         TextView view =  findViewById(R.id.textAndroid);
 
         int hasReadContactPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
-        if (hasReadContactPermission != PackageManager.PERMISSION_GRANTED) {
-             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Alert")
-                  .setMessage("Need youre permision to show phone Id!")
-                  .setCancelable(false)
-                  .setNegativeButton("OK",
-                    new DialogInterface.OnClickListener() {
-                      public void onClick(DialogInterface dialog, int id) {
-                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-                      dialog.cancel();
-                }
-            });
-             builder.show();
+
+        if(savedInstanceState == null) {
+            if (hasReadContactPermission != PackageManager.PERMISSION_GRANTED) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Alert")
+                        .setMessage("Need youre permision to show phone Id!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                                        dialog.cancel();
+                                    }
+                                })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+            }
         }
+
+
         if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
             TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
             view.setText("Id "+TelephonyMgr.getDeviceId());
         }
 
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
