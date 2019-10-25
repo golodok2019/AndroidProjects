@@ -29,10 +29,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView versionName = findViewById(R.id.textName);
-        versionName.setText(String.format(Locale.getDefault(), "Name: %s", BuildConfig.VERSION_NAME));
+        versionName.setText(String.format(Locale.getDefault(), "Name: %s ", BuildConfig.VERSION_NAME));
+
+        TextView versionModel = findViewById(R.id.textModel);
+        versionModel.setText(String.format(Locale.getDefault(), "Model: %s", android.os.Build.MODEL));
 
         TextView versionCode = findViewById(R.id.textCode);
-        versionCode.setText(String.format(Locale.getDefault(), "Model: %s", android.os.Build.MODEL));
+        versionCode.setText(String.format(Locale.getDefault(), "Code: %d", BuildConfig.VERSION_CODE));
 
         TextView view =  findViewById(R.id.textAndroid);
 
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

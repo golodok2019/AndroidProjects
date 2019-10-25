@@ -12,13 +12,13 @@ import org.ajoberstar.grgit.Grgit
 ext {
     git = Grgit.open(currentDir: projectDir)
     gitVersionName = git.describe()
-    gitVersionCode = git.tag.list().size()
+    gitNumbersTags = git.tag.list().size()
     gitVersionCodeTime = git.head().time
 }
 
 
 task printVersion() {
     println("Version Name: $gitVersionName")
-    println("Version Code: $gitVersionCode")
+    println("Number tags: $gitNumbersTags")
     println("Version Code Time: $gitVersionCodeTime")
 }
